@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 6 * * Sun'
-    - cron: '*/30 * * * Mon-Fri'
+    - cron: '*/5 * * * Mon-Fri'
   push:
     branches:
       - main
@@ -23,8 +23,14 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: '3.9'
-
+          
       - name: prepare release
+        uses: actions/checkout@v3
+        with: 
+          path: release
+          ref: main
+          
+      - name: prepare generater
         uses: actions/checkout@v3
         with: 
           repository: Qst236/getnews
@@ -32,11 +38,10 @@ jobs:
           path: getnews
           ref: main
           
-      - name: install dependencies
-        run: pip install -r getnews/requirements.txt
-
-      - name: get new news file
-        run: python3 getnews/main.py --file release/news.json
+      - name: install dependencies & get new news file
+        run: |
+          pip install -r getnews/requirements.txt
+          python3 getnews/main.py --file release/news.json
 
       - name: push release
         run: |
