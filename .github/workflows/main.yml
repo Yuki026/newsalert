@@ -1,0 +1,47 @@
+name: Update News Information
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * Sun'
+    - cron: '*/30 * * * Mon-Fri'
+  push:
+    branches:
+      - main
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    
+    steps:
+
+      - name: set variables
+        run: |
+          echo "UPDATE_TIME=$(TZ='Asia/Jakarta' date +%Y-%m-%d\ %H:%M)" >> $GITHUB_ENV
+
+      - name: set up python 3
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
+
+      - name: prepare release
+        uses: actions/checkout@v3
+        with: 
+          repository: Qst236/getnews
+          ssh-key: ${{ secrets.GETEPG }}
+          path: getnews
+          ref: main
+          
+      - name: install dependencies
+        run: pip install -r requirements.txt
+
+      - name: get new news file
+        run: python3 getnews/main.py --file release/news.json
+
+      - name: push release
+        run: |
+          git -C release config --local user.name github-actions
+          git -C release config --local user.email github-actions@github.com
+          git -C release add news.json
+          git -C release commit -m "auto update at ${{ env.UPDATE_TIME }}" --allow-empty
+          git -C release push
