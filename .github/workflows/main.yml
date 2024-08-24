@@ -33,7 +33,7 @@ jobs:
           ref: main
           
       - name: install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r getnews/requirements.txt
 
       - name: get new news file
         run: python3 getnews/main.py --file release/news.json
