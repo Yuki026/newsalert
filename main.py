@@ -91,14 +91,14 @@ def send_webhook(content, data):
             wait=True,
         )
 
-        newData["MESSAGE_ID"] = weekly.id
+        data["MESSAGE_ID"] = weekly.id
     else:
         weekly = webhook.edit_message(data["MESSAGE_ID"],
             embed=discord.Embed(description=content, color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE')
         )
-        newData["MESSAGE_ID"] = data["MESSAGE_ID"]
+        data["MESSAGE_ID"] = data["MESSAGE_ID"]
 
-    return newData
+    return data
 
 def main():
     data = read("data.json")
@@ -109,6 +109,5 @@ def main():
 # now = datetime.now(pytz.timezone('Asia/Jakarta'))
 now = datetime.strptime(os.environ["UPDATE_TIME"], "%Y-%m-%d %H:%M")
 today = change_language( now.strftime("%a %b %-d") )
-tomorrow = change_language( (now + timedelta(days=1)).strftime("%a %b %-d") )
 
 main()
