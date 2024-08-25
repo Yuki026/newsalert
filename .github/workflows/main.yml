@@ -44,6 +44,9 @@ jobs:
       - name: install dependencies
         run: |
           pip install -r getnews/requirements.txt
+
+      - name: run get news
+        run: |
           python3 getnews/main.py --file release/news.json
           
       - name: set variables
