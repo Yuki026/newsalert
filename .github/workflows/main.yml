@@ -42,12 +42,7 @@ jobs:
         run: |
           pip install -r getnews/requirements.txt
           python3 getnews/main.py --file release/news.json
-
-      - name: ls
-        run: |
-          ls
-          cat release/news.json
-
+      
       - name: push release
         run: |
           git -C release config --local user.name github-actions
