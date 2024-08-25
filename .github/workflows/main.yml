@@ -52,8 +52,8 @@ jobs:
       
       - name: push release
         run: |
-          git config --local user.name github-actions
-          git config --local user.email github-actions@github.com
-          git add data.json
-          git commit -m "auto update at ${{ env.UPDATE_TIME }}" --allow-empty
-          git push
+          git -C release config --local user.name github-actions
+          git -C release config --local user.email github-actions@github.com
+          git -C release add data.json
+          git -C release commit -m "auto update at ${{ env.UPDATE_TIME }}" --allow-empty
+          git -C release push
