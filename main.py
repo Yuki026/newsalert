@@ -87,14 +87,14 @@ def send_webhook(content, data):
             pass
         
         weekly = webhook.send(
-            embed=discord.Embed(description=weekly, color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE'),
+            embed=discord.Embed(description=content, color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE'),
             wait=True,
         )
 
         newData["MESSAGE_ID"] = weekly.id
     else:
         weekly = webhook.edit_message(data["MESSAGE_ID"],
-            embed=discord.Embed(description=weekly, color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE')
+            embed=discord.Embed(description=content, color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE')
         )
         newData["MESSAGE_ID"] = data["MESSAGE_ID"]
 
