@@ -32,6 +32,14 @@ jobs:
           ssh-key: ${{ secrets.GETNEWS }}
           path: getnews
           ref: main
+
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('getnews/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
           
       - name: install dependencies
         run: |
