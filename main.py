@@ -55,10 +55,8 @@ def format_text(data):
     start_day = False
     for day, events in data_by_date.items():
         if re.search("Sabtu", today) and not events:
-            weekly.append("update berikutnya hari minggu jam 1 siang. <a:GKek:887675713862373446>")
-            weekly.append("\n")
             break
-        
+            
         if today == day or re.search("Minggu", today) or start_day:
             weekly.append(f":date: **{day}**\n")
             if not events:
@@ -92,6 +90,12 @@ def send_webhook(content, data):
         )
 
         data["MESSAGE_ID"] = weekly.id
+    elif not content:
+        weekly = webhook.edit_message(data["MESSAGE_ID"],
+            embed=discord.Embed(description="lagi nyari apa? <:wut:495217822780096532>", color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE')
+        )
+        data["MESSAGE_ID"] = data["MESSAGE_ID"]
+        
     else:
         weekly = webhook.edit_message(data["MESSAGE_ID"],
             embed=discord.Embed(description=content, color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE')
