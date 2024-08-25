@@ -47,14 +47,10 @@ jobs:
         run: ls
 
       - name: ls getnews
-        run: |
-          cd getnews
-          ls
+        run: ls getnews
 
       - name: ls release
-        run: |
-          cd ../release
-          ls
+        run: ls release
       
       - name: push release
         run: |
