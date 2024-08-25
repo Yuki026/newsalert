@@ -14,11 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-
-      - name: set variables
-        run: |
-          echo "UPDATE_TIME=$(TZ='Asia/Jakarta' date +%Y-%m-%d\ %H:%M)" >> $GITHUB_ENV
-
       - name: set up python 3
         uses: actions/setup-python@v3
         with:
@@ -42,7 +37,11 @@ jobs:
         run: |
           pip install -r getnews/requirements.txt
           python3 getnews/main.py --file release/news.json
-
+          
+      - name: set variables
+        run: |
+          echo "UPDATE_TIME=$(TZ='Asia/Jakarta' date +%Y-%m-%d\ %H:%M)" >> $GITHUB_ENV
+      
       - name: send webhook
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
