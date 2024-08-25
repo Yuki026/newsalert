@@ -44,6 +44,9 @@ jobs:
           python3 getnews/main.py --file release/news.json
 
       - name: send webhook
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          UPDATE_TIME: ${{ env.UPDATE_TIME }}
         run: |
           cd release
           python3 main.py
