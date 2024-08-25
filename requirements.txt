@@ -1,4 +1,0 @@
-pytz
-discord
-selenium
-seleniumbase
