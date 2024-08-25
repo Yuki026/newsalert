@@ -95,7 +95,7 @@ def send_webhook(content, data):
         data["LAST_UPDATE"] = today
     elif not content:
         weekly = webhook.edit_message(data["MESSAGE_ID"],
-            embed=discord.Embed(description="lagi nyari apa? <:wut:495217822780096532>", color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE')
+            embed=discord.Embed(description="lagi nyari apa? <:wut:495217822780096532>", color=discord.Color.random())
         )
         data["MESSAGE_ID"] = data["MESSAGE_ID"]
         
