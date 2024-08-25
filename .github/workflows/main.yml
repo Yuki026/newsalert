@@ -43,8 +43,18 @@ jobs:
           pip install -r getnews/requirements.txt
           python3 getnews/main.py --file release/news.json
 
-      - name: p
+      - name: ls dir
         run: ls
+
+      - name: ls getnews
+        run: |
+          cd getnews
+          ls
+
+      - name: ls release
+        run: |
+          cd ../release
+          ls
       
       - name: push release
         run: |
