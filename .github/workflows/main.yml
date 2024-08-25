@@ -37,28 +37,21 @@ jobs:
           ssh-key: ${{ secrets.GETNEWS }}
           path: getnews
           ref: main
-
-      - name: ls dir
-        run: ls
           
-      - name: install dependencies & get new news file
+      - name: install dependencies
         run: |
           pip install -r getnews/requirements.txt
           python3 getnews/main.py --file release/news.json
 
-      - name: ls dir
-        run: ls
-
-      - name: ls getnews
-        run: ls getnews
-
-      - name: ls release
-        run: ls release
+      - name: send webhook
+        run: |
+          cd release
+          python3 main.py
       
       - name: push release
         run: |
-          git -C release config --local user.name github-actions
-          git -C release config --local user.email github-actions@github.com
-          git -C release add news.json
-          git -C release commit -m "auto update at ${{ env.UPDATE_TIME }}" --allow-empty
-          git -C release push
+          git config --local user.name github-actions
+          git config --local user.email github-actions@github.com
+          git add data.json
+          git commit -m "auto update at ${{ env.UPDATE_TIME }}" --allow-empty
+          git push
