@@ -68,12 +68,9 @@ def format_text(data):
             weekly.append("\n﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋")
             
             start_day = True
-
-    cweekly = "\n".join(weekly)
-    print(cweekly)
     return "\n".join(weekly)
 
-def send_webhook(weekly, data):
+def send_webhook(content, data):
     newData = {}
     webhook = SyncWebhook.from_url(
         os.environ["WEBHOOK_URL"]
@@ -82,8 +79,8 @@ def send_webhook(weekly, data):
 
     if re.search("Minggu", today):
         try:
-            if "WEEKLY_ID" in data:
-                webhook.delete_message(data["WEEKLY_ID"])
+            if "MESSAGE_ID" in data:
+                webhook.delete_message(data["MESSAGE_ID"])
         except discord.errors.NotFound:
             pass
         except TypeError:
@@ -94,18 +91,18 @@ def send_webhook(weekly, data):
             wait=True,
         )
 
-        newData["WEEKLY_ID"] = weekly.id
+        newData["MESSAGE_ID"] = weekly.id
     else:
-        weekly = webhook.edit_message(data["WEEKLY_ID"],
+        weekly = webhook.edit_message(data["MESSAGE_ID"],
             embed=discord.Embed(description=weekly, color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE')
         )
-        newData["WEEKLY_ID"] = data["WEEKLY_ID"]
+        newData["MESSAGE_ID"] = data["MESSAGE_ID"]
 
     return newData
 
 def main():
     data = read("data.json")
-    content = format_text(read("news.json"))
+    content = format_text(read(news_path))
     newData = send_webhook(content, data)
     write(newData)
 
