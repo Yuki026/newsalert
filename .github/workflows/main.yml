@@ -42,11 +42,12 @@ jobs:
         run: |
           pip install -r getnews/requirements.txt
           python3 getnews/main.py --file release/news.json
+          cat release/news.json
 
       - name: push release
         run: |
-          git -m release config --local user.name github-actions
-          git -m release config --local user.email github-actions@github.com
-          git -m release add news.json
-          git -m release commit -m "auto update at ${{ env.UPDATE_TIME }}" --allow-empty
-          git -m release push
+          git -C release config --local user.name github-actions
+          git -C release config --local user.email github-actions@github.com
+          git -C release add news.json
+          git -C release commit -m "auto update at ${{ env.UPDATE_TIME }}" --allow-empty
+          git -C release push
