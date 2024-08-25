@@ -37,6 +37,9 @@ jobs:
           ssh-key: ${{ secrets.GETNEWS }}
           path: getnews
           ref: main
+
+      - name: ls dir
+        run: ls
           
       - name: install dependencies & get new news file
         run: |
