@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v3
         with: 
           repository: Qst236/getnews
-          ssh-key: ${{ secrets.GETNEWS }}
+          #ssh-key: ${{ secrets.GETNEWS }}
           path: getnews
           ref: main
           
