@@ -2,11 +2,9 @@ import os
 import re
 import pytz
 import json
-import time
 import discord
-import requests
 from discord import SyncWebhook
-from datetime import datetime, timedelta
+from datetime import datetime
 from config import WEEK, MONTH
 
 news_path = "news.json"
@@ -75,7 +73,11 @@ def send_webhook(content, data):
         # "https://discord.com/api/webhooks/1274771477941719103/P2dIS_YDdiCvDvATxM47CgfAdL6VKJbkQwokhQ_KU3-oD8TczmHMr9JiFMPIKHNZE5Xe"
     )
 
-    if re.search("Minggu", today):
+    if "LAST_UPDATE" not in data:
+        data["LAST_UPDATE"] = ""
+        
+    
+    if re.search("Minggu", today) and data["LAST_UPDATE"] != today:
         try:
             if "MESSAGE_ID" in data:
                 webhook.delete_message(data["MESSAGE_ID"])
@@ -90,6 +92,7 @@ def send_webhook(content, data):
         )
 
         data["MESSAGE_ID"] = weekly.id
+        data["LAST_UPDATE"] = today
     elif not content:
         weekly = webhook.edit_message(data["MESSAGE_ID"],
             embed=discord.Embed(description="lagi nyari apa? <:wut:495217822780096532>", color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE')
@@ -105,7 +108,7 @@ def send_webhook(content, data):
     return data
 
 def main():
-    data = read("data.json")
+    data = read(data_path)
     content = format_text(read(news_path))
     newData = send_webhook(content, data)
     write(newData)
