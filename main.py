@@ -51,6 +51,7 @@ def format_text(data):
 
     weekly = []
     start_day = False
+    print(data_by_date)
     for day, events in data_by_date.items():
         if re.search("Sabtu", today) and not events:
             break
