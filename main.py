@@ -95,7 +95,7 @@ def send_webhook(content, data):
         data["LAST_UPDATE"] = today
     elif not content:
         weekly = webhook.edit_message(data["MESSAGE_ID"],
-            embed=discord.Embed(description="lagi nyari apa?", color=discord.Color.random()).set_image(url="https://i.imgur.com/ZGPxFN2.jpg")
+            embed=discord.Embed(description="lagi nyari apa?", color=discord.Color.random()).set_image(url="https://steamuserimages-a.akamaihd.net/ugc/928189911379866255/643799529FBCA71DF6AB5B7D49CE2F61888BA4F1/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false")
         )
         data["MESSAGE_ID"] = data["MESSAGE_ID"]
         
