@@ -58,7 +58,7 @@ def format_text(data):
         if today == day or re.search("Minggu", today) or start_day:
             weekly.append(f":date: **{day}**\n")
             if not events:
-                weekly.append("tidak ada news. <a:pepemoney1:1272102396239020074>")
+                weekly.append("tidak ada news. <:pepestonks:1272101652668874814>")
             else:
                 weekly.extend(events)
             weekly.append("\n﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋")
@@ -95,7 +95,7 @@ def send_webhook(content, data):
         data["LAST_UPDATE"] = today
     elif not content:
         weekly = webhook.edit_message(data["MESSAGE_ID"],
-            embed=discord.Embed(description="lagi nyari apa?", color=discord.Color.random()).set_image(url="https://steamuserimages-a.akamaihd.net/ugc/928189911379866255/643799529FBCA71DF6AB5B7D49CE2F61888BA4F1/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false")
+            embed=discord.Embed(description="tunggu besok saja newsnya, saya malas ngoding :v", color=discord.Color.random())
         )
         data["MESSAGE_ID"] = data["MESSAGE_ID"]
         
