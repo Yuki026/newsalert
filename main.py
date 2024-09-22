@@ -45,6 +45,9 @@ def format_text(data):
                 if ":" in time:
                     last = time
 
+            if re.search('Powell', item['event']):
+                item['event'].replace('Powell', '<:POWELL2:1272101722965282876>')
+
             data_by_date[day].append(
                 f"`{time}`{create_flag(item['currency'])}  **{item['currency'].upper()}** - **{item['event']}**"
             )
