@@ -16,7 +16,7 @@ def read(path):
         with open(path, "r") as file:
             return json.load(file)
     else:
-        return []
+        return {}
 
 def write(data):
     with open(data_path, "w") as file:
