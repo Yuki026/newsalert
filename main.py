@@ -6,6 +6,7 @@ import discord
 from discord import SyncWebhook
 from datetime import datetime
 from config import WEEK, MONTH
+from forexfactory import get_news
 
 news_path = "news.json"
 data_path = "data.json"
@@ -108,6 +109,8 @@ def send_webhook(content, data):
     return data
 
 def main():
+    get_news()
+    
     data = read(data_path)
     content = format_text(read(news_path))
     newData = send_webhook(content, data)
