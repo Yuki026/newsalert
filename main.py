@@ -12,8 +12,11 @@ news_path = "news.json"
 data_path = "data.json"
 
 def read(path):
-    with open(path, "r") as file:
-        return json.load(file)
+    if os.path.isfile(data_path):
+        with open(path, "r") as file:
+            return json.load(file)
+    else:
+        return []
 
 def write(data):
     with open(data_path, "w") as file:
