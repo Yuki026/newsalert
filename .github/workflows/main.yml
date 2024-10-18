@@ -23,14 +23,6 @@ jobs:
         with: 
           path: release
           ref: main
-          
-      - name: prepare generater
-        uses: actions/checkout@v3
-        with: 
-          repository: Qst236/getnews
-          ssh-key: ${{ secrets.GETNEWS }}
-          path: getnews
-          ref: main
 
       #- name: Cache pip
       #  uses: actions/cache@v3
@@ -42,11 +34,7 @@ jobs:
           
       - name: install dependencies
         run: |
-          pip install -r getnews/requirements.txt
-
-      - name: run get news
-        run: |
-          python3 getnews/main.py --file release/news.json
+          pip install -r requirements.txt
           
       - name: set variables
         run: |
@@ -62,8 +50,8 @@ jobs:
       
       - name: push release
         run: |
-          git -C release config --local user.name github-actions
-          git -C release config --local user.email github-actions@github.com
-          git -C release add data.json
-          git -C release commit -m "auto update at ${{ env.UPDATE_TIME }}" --allow-empty
-          git -C release push
+          git config --local user.name github-actions
+          git config --local user.email github-actions@github.com
+          git add data.json
+          git commit -m "auto update at ${{ env.UPDATE_TIME }}" --allow-empty
+          git push
