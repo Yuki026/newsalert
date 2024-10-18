@@ -12,11 +12,8 @@ news_path = "news.json"
 data_path = "data.json"
 
 def read(path):
-    if os.path.isfile(data_path):
-        with open(path, "r") as file:
-            return json.load(file)
-    else:
-        return {}
+    with open(path, "r") as file:
+        return json.load(file)
 
 def write(data):
     with open(data_path, "w") as file:
@@ -81,7 +78,7 @@ def send_webhook(content, data):
         data["LAST_UPDATE"] = ""
         
     
-    if re.search("Minggu", today) and data["LAST_UPDATE"] != today or "MESSAGE_ID" not in data:
+    if re.search("Minggu", today) and data["LAST_UPDATE"] != today:
         try:
             if "MESSAGE_ID" in data:
                 webhook.delete_message(data["MESSAGE_ID"])
