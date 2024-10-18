@@ -3,7 +3,7 @@ import json
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.description='This is a python script to generate Chinese IPTV EPG file in xml format'
+parser.description='This is a python script to generate news file in json format'
 parser.add_argument("-f", "--file", help="default=news.json", dest="path", default="news.json")
 args = parser.parse_args()
 
