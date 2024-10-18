@@ -78,7 +78,7 @@ def send_webhook(content, data):
         data["LAST_UPDATE"] = ""
         
     
-    if re.search("Minggu", today) and data["LAST_UPDATE"] != today:
+    if re.search("Minggu", today) and data["LAST_UPDATE"] != today or "MESSAGE_ID" not in data:
         try:
             if "MESSAGE_ID" in data:
                 webhook.delete_message(data["MESSAGE_ID"])
