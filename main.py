@@ -62,7 +62,7 @@ def format_text(data):
                 weekly.append("tidak ada news. <:pepestonks:1272101652668874814>")
             else:
                 weekly.extend(events)
-            weekly.append("\n﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋﹋")
+            weekly.append("\n" + "﹋" * 15)
             
             start_day = True
     return "\n".join(weekly)
