@@ -68,7 +68,6 @@ def format_text(data):
     return "\n".join(weekly)
 
 def send_webhook(content, data):
-    newData = {}
     webhook = SyncWebhook.from_url(
         os.environ["WEBHOOK_URL"]
         # "https://discord.com/api/webhooks/1274771477941719103/P2dIS_YDdiCvDvATxM47CgfAdL6VKJbkQwokhQ_KU3-oD8TczmHMr9JiFMPIKHNZE5Xe"
@@ -77,16 +76,36 @@ def send_webhook(content, data):
     if "LAST_UPDATE" not in data:
         data["LAST_UPDATE"] = ""
         
-    
-    if re.search("Minggu", today) and data["LAST_UPDATE"] != today:
-        try:
-            if "MESSAGE_ID" in data:
-                webhook.delete_message(data["MESSAGE_ID"])
-        except discord.errors.NotFound:
-            pass
-        except TypeError:
-            pass
+    try:
+        if re.search("Minggu", today) and data["LAST_UPDATE"] != today:
+            try:
+                if "MESSAGE_ID" in data:
+                    webhook.delete_message(data["MESSAGE_ID"])
+            except discord.errors.NotFound:
+                pass
+            except TypeError:
+                pass
         
+            weekly = webhook.send(
+                embed=discord.Embed(description=content, color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE 🔴'),
+                wait=True,
+            )
+
+            data["MESSAGE_ID"] = weekly.id
+            data["LAST_UPDATE"] = today
+        elif not content:
+            weekly = webhook.edit_message(data["MESSAGE_ID"],
+                embed=discord.Embed(description="tunggu besok saja newsnya, saya malas ngoding :v", color=discord.Color.random())
+            )
+            data["MESSAGE_ID"] = data["MESSAGE_ID"]
+        
+        else:
+            weekly = webhook.edit_message(data["MESSAGE_ID"],
+                embed=discord.Embed(description=content, color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE 🔴')
+            )
+            data["MESSAGE_ID"] = data["MESSAGE_ID"]
+        
+    except discord.errors.NotFound:
         weekly = webhook.send(
             embed=discord.Embed(description=content, color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE 🔴'),
             wait=True,
@@ -94,17 +113,6 @@ def send_webhook(content, data):
 
         data["MESSAGE_ID"] = weekly.id
         data["LAST_UPDATE"] = today
-    elif not content:
-        weekly = webhook.edit_message(data["MESSAGE_ID"],
-            embed=discord.Embed(description="tunggu besok saja newsnya, saya malas ngoding :v", color=discord.Color.random())
-        )
-        data["MESSAGE_ID"] = data["MESSAGE_ID"]
-        
-    else:
-        weekly = webhook.edit_message(data["MESSAGE_ID"],
-            embed=discord.Embed(description=content, color=discord.Color.random()).set_footer(text='*Waktu: WIB (Asia/Jakarta)\n*Khusus berita dampak GEDE 🔴')
-        )
-        data["MESSAGE_ID"] = data["MESSAGE_ID"]
 
     return data
 
