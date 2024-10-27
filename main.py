@@ -39,7 +39,7 @@ def format_text(data):
         if day not in data_by_date:
             data_by_date[day] = []
         
-        if item["impact"] != "yellow" and item["impact"] != "orange" and item["greyed"] == "False":
+        if item["impact"] != "yellow" and item["impact"] != "orange": # and item["greyed"] == "False"
             if time == last:
                 time = " " * 8
             else:
